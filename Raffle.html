@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+<input type="text" id="name">  
+<button id="AddName" >Add Name</button>
+  <button id="Start"> Start Raffle</button>
+
+
+</body>
+</html>
+
+<script>
+    var addName = document.getElementById("AddName");
+var start = document.getElementById("Start");
+var arr = [];
+var tblEntries = document.getElementById("tblEntries");
+
+var showEntries = function(){
+    var entries =document.getElementById("entriesDiv")
+    if(document.body.contains(entries)){
+        var remove = entries.parentNode.removeChild(entries);
+    }
+     entries = document.createElement("div");
+     var title = document.createTextNode("Entries "); 
+     entries.appendChild(title)
+    entries.setAttribute("id","entriesDiv");
+
+  arr.map(name =>{
+    var newDiv = document.createElement("div");
+    var newContent = document.createTextNode(name); 
+    newDiv.appendChild(newContent);
+    entries.appendChild(newDiv);
+    document.body.appendChild(entries);
+  });
+}
+
+
+
+addName.onclick = function(){
+  var name = document.getElementById("name");
+  arr.push(name.value);
+  name.value = '';
+  showEntries()
+  console.log(arr);  
+}
+
+var showWinner = function(name){   
+    var winners = document.getElementById("winnersDiv")
+    var newDiv = document.createElement("div");
+    var newContent = document.createTextNode(name); 
+    newDiv.appendChild(newContent);
+    winners.appendChild(newDiv);
+    
+}
+start.onclick = function(){
+    var winners = document.createElement("div");
+     var title = document.createTextNode("Winners "); 
+     winners.appendChild(title)
+     winners.setAttribute("id","winnersDiv");
+     document.body.appendChild(winners);
+
+    var count = arr.length
+    var max = count;
+    for(var i = 0; i < max; i++){
+        var random = Math.floor(Math.random() * count);
+        console.log(arr[random])
+        showWinner(arr[random])      
+        arr.splice(random, 1) 
+        showEntries()
+        count--;
+    }
+}
+
+
+
+</script>
